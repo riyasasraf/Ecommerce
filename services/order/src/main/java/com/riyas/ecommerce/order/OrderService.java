@@ -11,6 +11,8 @@ import com.riyas.ecommerce.kafka.OrderConfirmation;
 import com.riyas.ecommerce.kafka.OrderProducer;
 import com.riyas.ecommerce.orderLine.OrderLineRequest;
 import com.riyas.ecommerce.orderLine.OrderLineService;
+import com.riyas.ecommerce.payment.PaymentClient;
+import com.riyas.ecommerce.payment.PaymentRequest;
 import com.riyas.ecommerce.product.ProductClient;
 import com.riyas.ecommerce.product.PurchaseRequest;
 
@@ -27,6 +29,7 @@ public class OrderService {
   private final OrderMapper mapper;
   private final OrderLineService orderLineService;
   private final OrderProducer orderProducer;
+  private final PaymentClient paymentClient;
 
   public Integer createOrder(OrderRequest request) {
 
@@ -41,12 +44,17 @@ public class OrderService {
           new OrderLineRequest(null, order.getId(), purchaseRequest.productId(), purchaseRequest.quantity()));
     }
 
+    var paymentRequest = new PaymentRequest(request.amount(),request.paymentMethod(),order.getId(),order.getRefrence(),customer);
+    paymentClient.requestOrderPayment(paymentRequest);
+
+
     orderProducer.sendOrderConfirmation(new OrderConfirmation(
         request.refrence(),
         request.amount(),
         request.paymentMethod(),
         customer,
         purchasedProduct));
+
 
     return order.getId();
   }

@@ -1,0 +1,23 @@
+package com.riyas.ecommerce.payment;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping ("api/v1/payment")
+public class PaymentController {
+  
+  private final PaymentService service;
+
+  public ResponseEntity<Integer> createPayment(@RequestBody @Valid PaymentRequest request) {
+    return ResponseEntity.ok(service.createPayment(request));
+  }
+
+}
