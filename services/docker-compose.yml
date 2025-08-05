@@ -30,7 +30,6 @@ services:
     restart: unless-stopped
 
 
-
   zookeeper:
     image: confluentinc/cp-zookeeper
     container_name: zookeeper
@@ -43,23 +42,24 @@ services:
     networks:
       - microservice-net
   kafka:
-    image: confluentinc/cp-kafka 
-    container_name: ms_kafka
-    ports:
-      - 9092:9092
-    depends_on:
-      - zookeeper
-    environment:
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
-    networks:
-      - microservice-net
-
-
+      image: confluentinc/cp-kafka:7.3.0
+      container_name: ms_kafka
+      ports:
+        - 9092:9092
+      depends_on:
+        - zookeeper
+      environment:
+        KAFKA_BROKER_ID: 1
+        KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181 # If using Zookeeper
+        KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://ms_kafka:29092,PLAINTEXT_HOST://localhost:9092
+        KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+        KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+        KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+        KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+        KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      networks:
+        - microservice-net
+      restart: unless-stopped
 
   mongodb:
     container_name: ms_mongodb

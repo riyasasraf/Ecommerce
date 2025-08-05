@@ -18,9 +18,11 @@ import com.riyas.ecommerce.product.PurchaseRequest;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderService {
 
   private final CustomerClient customerClient;
@@ -36,12 +38,13 @@ public class OrderService {
     var customer = customerClient.findCustomerById(request.customerId())
         .orElseThrow(() -> new BusinessException("Cannot create order:: no Customer exsists with the provided Id"));
 
-    var purchasedProduct = this.productClient.purchaseResponse(request.products());
-    var order = this.repository.save(mapper.toOrder(request));
+    var purchasedProduct = productClient.purchaseResponse(request.products());
+    var order = repository.save(mapper.toOrder(request));
+    log.debug("Saving order: {}", mapper.toOrder(request));
 
     for (PurchaseRequest purchaseRequest : request.products()) {
       orderLineService.saveOrderLine(
-          new OrderLineRequest(null, order.getId(), purchaseRequest.productId(), purchaseRequest.quantity()));
+          new OrderLineRequest(null,order.getId(), purchaseRequest.productId(), purchaseRequest.quantity()));
     }
 
     var paymentRequest = new PaymentRequest(request.amount(),request.paymentMethod(),order.getId(),order.getRefrence(),customer);

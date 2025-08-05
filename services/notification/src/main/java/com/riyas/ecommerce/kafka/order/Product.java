@@ -6,9 +6,9 @@ public record Product(
 
     Integer productId,
     String name,
-    String description,
+    String productDescription,
     BigDecimal price,
-    double quantity
+    double quantityPurchased
 
 ) {
 

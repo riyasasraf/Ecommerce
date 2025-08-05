@@ -35,7 +35,7 @@ public class NotificationConsumer {
         .build());
 
     var customerName = paymentConfirmation.customerFirstName() + "" + paymentConfirmation.customerLastName();
-    emailService.sendPayment(paymentConfirmation.email(), customerName,paymentConfirmation.amount(), paymentConfirmation.orderRefrence());
+    emailService.sendPayment(paymentConfirmation.customerEmail(), customerName,paymentConfirmation.amount(), paymentConfirmation.orderRefrence());
   }
   
   @KafkaListener(topics = "order-topic")

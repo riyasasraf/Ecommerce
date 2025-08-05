@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .email-container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba/rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        .header {
+            color: #2196F3;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .content {
+            color: #333333;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .details {
+            background-color: #e3f2fd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .details p {
+            margin: 8px 0;
+        }
+        .details strong {
+            color: #1976D2;
+        }
+        .product-list {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+            border-top: 1px dashed #bbdefb;
+            padding-top: 15px;
+        }
+        .product-list li {
+            background-color: #ffffff;
+            border: 1px solid #bbdefb;
+            border-radius: 6px;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .product-list li span {
+            font-weight: bold;
+            color: #3f51b5;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #777777;
+        }
+        .button {
+            display: inline-block;
+            background-color: #2196F3;
+            color: #ffffff;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">Order Confirmed!</div>
+        <div class="content">
+            <p>Dear <strong th:text="${customerName}">Customer</strong>,</p>
+            <p>Thank you for your order! Your order <strong th:text="${orderReference}">[Order Reference]</strong> has been successfully placed and is being processed.</p>
+            <div class="details">
+                <p><strong>Order Reference:</strong> <span th:text="${orderReference}">[Order Reference]</span></p>
+                <p><strong>Total Amount:</strong> <span th:text="${totalAmount}">[Total Amount]</span></p>
+                <p><strong>Items Ordered:</strong></p>
+                <ul class="product-list">
+                    <li th:each="product : ${products}">
+                        <span th:text="${product.name}">Product Name</span>
+                        <span>Qty: <span th:text="${product.quantityPurchased}">1</span></span>
+                        <span>$<span th:text="${product.price}">0.00</span></span>
+                    </li>
+                </ul>
+            </div>
+            <p>We will send you another update once your order has shipped.</p>
+        </div>
+        <div class="footer">
+            <p>If you have any questions, please contact our support team.</p>
+            <p>&copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2025</span> Your E-commerce Store. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

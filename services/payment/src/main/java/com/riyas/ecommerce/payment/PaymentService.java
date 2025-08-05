@@ -11,9 +11,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PaymentService {
 
-  private static PaymentRepository repository;
-  private static PaymentMapper mapper;
-  private static NotificationProducer producer; 
+  private final PaymentRepository repository;
+  private final PaymentMapper mapper;
+  private final NotificationProducer producer; 
   public Integer createPayment(PaymentRequest request) {
     var payment = repository.save(mapper.toPayment(request));
 

@@ -9,7 +9,7 @@ public record PaymentConfirmation(
     PaymentMethod paymentMethod,
     String customerFirstName,
     String customerLastName,
-    String email
+    String customerEmail
 
 ) {
 

@@ -1,19 +1,19 @@
-package com.riyas.ecommerce.Notification;
+    package com.riyas.ecommerce.Notification;
 
-import java.math.BigDecimal;
+    import java.math.BigDecimal;
 
-import com.riyas.ecommerce.payment.PaymentMethod;
+    import com.riyas.ecommerce.payment.PaymentMethod;
 
 
-public record PaymentNotificationRequest(
+    public record PaymentNotificationRequest(
 
-    String orderRefrence,
-    BigDecimal amount,
-    PaymentMethod paymentMethod,
-    String customerFirstName,
-    String customerLastName,
-    String customerEmail
+        String orderRefrence,
+        BigDecimal amount,
+        PaymentMethod paymentMethod,
+        String customerFirstName,
+        String customerLastName,
+        String customerEmail
 
-) {
+    ) {
 
-}
+    }
