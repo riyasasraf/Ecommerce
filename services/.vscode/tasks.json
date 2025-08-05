@@ -1,0 +1,53 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start config-server",
+      "type": "shell",
+      "command": "cd services/config-server && ./mvnw spring-boot:run",
+      "problemMatcher": []
+    },
+    {
+      "label": "Start discovery",
+      "type": "shell",
+      "command": "cd services/discovery && ./mvnw spring-boot:run",
+      "problemMatcher": [],
+      "dependsOn": [
+        "Start config-server"
+      ]
+    },
+    {
+      "label": "Start gateway",
+      "type": "shell",
+      "command": "cd services/gateway && ./mvnw spring-boot:run",
+      "problemMatcher": [],
+      "dependsOn": [
+        "Start discovery"
+      ]
+    },
+    {
+      "label": "Start customer",
+      "type": "shell",
+      "command": "cd services/customer && ./mvnw spring-boot:run",
+      "problemMatcher": [],
+      "dependsOn": [
+        "Start gateway"
+      ]
+    },
+    {
+      "label": "Start All",
+      "dependsOn": [
+        "Start config-server",
+        "Start discovery",
+        "Start gateway",
+        "Start customer"
+      ],
+      "dependsOrder": "sequence",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}
