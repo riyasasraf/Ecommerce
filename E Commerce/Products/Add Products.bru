@@ -1,0 +1,25 @@
+meta {
+  name: Add Products
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8222/api/v1/products
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  file: @file(C:\Users\Admin\Pictures\Screenshots\Screenshot (229).png) @contentType(file)
+  product: '''
+    {
+      "name": "Wireless Mouse",
+      "description": "A high-precision wireless mouse with ergonomic design",
+      "availableQuantity": 50,
+      "price": 999.99,
+      "categoryId": 2
+    }
+    
+  ''' @contentType(application/json)
+}

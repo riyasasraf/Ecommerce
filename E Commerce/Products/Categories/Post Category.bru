@@ -1,0 +1,18 @@
+meta {
+  name: Post Category
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8050/api/v1/category
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name":"Accesories",
+    "description":"this is a accesories"
+  }
+}
