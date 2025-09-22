@@ -209,7 +209,7 @@ export default function Navigation() {
 
         <nav
           aria-label="Top"
-          className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+          className="mx-auto w-full px-2"
         >
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center">
@@ -225,7 +225,7 @@ export default function Navigation() {
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
-                <a href="#">
+                <a href="/">
                   <span className="sr-only">Your Company</span>
                   <img
                     alt=""
