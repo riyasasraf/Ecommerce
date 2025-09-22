@@ -1,13 +1,16 @@
 package com.riyas.ecommerce.products;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.riyas.ecommerce.exceptions.ProductNotFoundException;
+import com.riyas.ecommerce.minio.ImageService;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +23,7 @@ public class ProductService {
 
   public final ProductRepository repository;
   public final ProductMapper mapper;
+  public final ImageService imageService;
 
   public List<ProductPurchaseResponse> purchaseProducts(List<ProductPurchaseRequest> purchaseRequest) {
     var productIds = purchaseRequest.stream().map(ProductPurchaseRequest::productId).toList();
@@ -47,8 +51,15 @@ public class ProductService {
 
   }
 
-  public Integer createProduct(ProductRequest request) {
-    var product = mapper.toProduct(request);
+  public Integer createProduct(ProductRequest request , MultipartFile file) {
+    Products product = mapper.toProduct(request);
+    String productImageUrl;
+    try {
+      productImageUrl = imageService.uploadImage(file);
+      product.setProductImageUrl(productImageUrl);
+    } catch (IOException e) {
+      throw new RuntimeException("Failed to upload product image", e);
+    }
     return repository.save(product).getId();
   }
 

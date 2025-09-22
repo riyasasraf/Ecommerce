@@ -2,14 +2,17 @@ package com.riyas.ecommerce.products;
 
 import org.springframework.stereotype.Service;
 
+import com.riyas.ecommerce.category.Category;
+
 @Service
 public class ProductMapper {
 
   public Products toProduct(ProductRequest request) {
-    return Products.builder().id(request.id())
+    return Products.builder()
         .name(request.name())
         .description(request.description())
         .price(request.price())
+        .availableQuantity(request.availableQuantity())
         .category(Category.builder().id(request.categoryId()).build())
         .build();
   }

@@ -2,6 +2,8 @@ package com.riyas.ecommerce.products;
 
 import java.math.BigDecimal;
 
+import com.riyas.ecommerce.category.Category;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -28,6 +30,7 @@ public class Products {
   private String description;
   private Double availableQuantity;
   private BigDecimal price;
+  private String productImageUrl;
   @ManyToOne
   @JoinColumn(name = "category_id")
   private Category category;

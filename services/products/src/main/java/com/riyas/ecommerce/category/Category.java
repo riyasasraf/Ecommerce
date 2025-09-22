@@ -1,6 +1,8 @@
-package com.riyas.ecommerce.products;
+package com.riyas.ecommerce.category;
 
 import java.util.List;
+
+import com.riyas.ecommerce.products.Products;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
